@@ -1,15 +1,15 @@
 // Copyright (c) <2017> <Matheus Villela>
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,7 +20,17 @@
 
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+/// 扫码的场景
+enum QRCodeScene {
+  /// 绑定加油站
+  bindingGasStation,
+
+  /// 加油
+  fueling,
+}
 
 class QRCodeReader {
   static const MethodChannel _channel = const MethodChannel('qrcode_reader');
@@ -31,6 +41,21 @@ class QRCodeReader {
   bool _handlePermissions = true;
   bool _executeAfterPermissionGranted = true;
   bool _frontCamera = false;
+
+  final QRCodeScene qrCodeScene;
+
+  ValueChanged<String> callback;
+
+  QRCodeReader({
+    this.qrCodeScene = QRCodeScene.fueling,
+    this.callback,
+  }) {
+    _channel.setMethodCallHandler((MethodCall call) {
+      if (callback != null) {
+        callback(call.method);
+      }
+    });
+  }
 
   QRCodeReader setAutoFocusIntervalInMs(int autoFocusIntervalInMs) {
     _autoFocusIntervalInMs = autoFocusIntervalInMs;
@@ -52,7 +77,8 @@ class QRCodeReader {
     return this;
   }
 
-  QRCodeReader setExecuteAfterPermissionGranted(bool executeAfterPermissionGranted) {
+  QRCodeReader setExecuteAfterPermissionGranted(
+      bool executeAfterPermissionGranted) {
     _executeAfterPermissionGranted = executeAfterPermissionGranted;
     return this;
   }
@@ -70,6 +96,7 @@ class QRCodeReader {
       "handlePermissions": _handlePermissions,
       "executeAfterPermissionGranted": _executeAfterPermissionGranted,
       "frontCamera": _frontCamera,
+      "qrCodeScene": qrCodeScene.toString().split('.')[1],
     };
     return await _channel.invokeMethod('readQRCode', params);
   }

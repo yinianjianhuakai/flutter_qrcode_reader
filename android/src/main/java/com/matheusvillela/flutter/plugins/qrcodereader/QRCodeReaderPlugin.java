@@ -39,30 +39,33 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.ActivityResultListener;
 
+
 public class QRCodeReaderPlugin implements MethodCallHandler, ActivityResultListener, PluginRegistry.RequestPermissionsResultListener {
     private static final String CHANNEL = "qrcode_reader";
 
     private static final int REQUEST_CODE_SCAN_ACTIVITY = 2777;
     private static final int REQUEST_CODE_CAMERA_PERMISSION = 3777;
-    //    private static QRCodeReaderPlugin instance;
+    public static QRCodeReaderPlugin instance;
 
     private FlutterActivity activity;
     private Result pendingResult;
     private Map<String, Object> arguments;
     private boolean executeAfterPermissionGranted;
 
+    public QRCodeScene qrCodeScene;
+
+    public static MethodChannel channel;
+
     public QRCodeReaderPlugin(FlutterActivity activity) {
         this.activity = activity;
     }
 
     public static void registerWith(PluginRegistry.Registrar registrar) {
-	//        if (instance == null) {
-            final MethodChannel channel = new MethodChannel(registrar.messenger(), CHANNEL);
-            final QRCodeReaderPlugin instance = new QRCodeReaderPlugin((FlutterActivity) registrar.activity());
-            registrar.addActivityResultListener(instance);
-            registrar.addRequestPermissionsResultListener(instance);
-            channel.setMethodCallHandler(instance);
-	    // }
+        channel = new MethodChannel(registrar.messenger(), CHANNEL);
+        instance = new QRCodeReaderPlugin((FlutterActivity) registrar.activity());
+        registrar.addActivityResultListener(instance);
+        registrar.addRequestPermissionsResultListener(instance);
+        channel.setMethodCallHandler(instance);
     }
 
 
@@ -80,6 +83,12 @@ public class QRCodeReaderPlugin implements MethodCallHandler, ActivityResultList
             arguments = (Map<String, Object>) call.arguments;
             boolean handlePermission = (boolean) arguments.get("handlePermissions");
             this.executeAfterPermissionGranted = (boolean) arguments.get("executeAfterPermissionGranted");
+            String qrCodeScene = (String) arguments.get("qrCodeScene");
+            if (qrCodeScene.equals("bindingGasStation")) {
+                this.qrCodeScene = QRCodeScene.bindingGasStation;
+            } else if (qrCodeScene.equals("fueling")) {
+                this.qrCodeScene = QRCodeScene.fueling;
+            }
 
             if (checkSelfPermission(activity,
                     Manifest.permission.CAMERA)
@@ -124,7 +133,10 @@ public class QRCodeReaderPlugin implements MethodCallHandler, ActivityResultList
         if (permission == null) {
             throw new IllegalArgumentException("permission is null");
         }
-        return context.checkPermission(permission, android.os.Process.myPid(), Process.myUid());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BASE_1_1) {
+            return context.checkPermission(permission, Process.myPid(), Process.myUid());
+        }
+        return 0;
     }
 
 
