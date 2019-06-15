@@ -61,6 +61,10 @@ public class QRScanActivity extends Activity implements QRCodeReaderView.OnQRCod
             }
         });
         if (QRCodeReaderPlugin.instance.qrCodeScene == QRCodeScene.fueling) {
+            tv_chepaifu.setVisibility(View.GONE);//车牌付，VISIBLE显示，隐藏GONE
+            tv_yuangongid.setVisibility(View.VISIBLE);//输入员工ID，VISIBLE显示，隐藏GONE
+            my_qrcode.setVisibility(View.VISIBLE);
+        } if (QRCodeReaderPlugin.instance.qrCodeScene == QRCodeScene.fuelingWithPlateNumberPay) {
             tv_chepaifu.setVisibility(View.VISIBLE);//车牌付，VISIBLE显示，隐藏GONE
             tv_yuangongid.setVisibility(View.VISIBLE);//输入员工ID，VISIBLE显示，隐藏GONE
             my_qrcode.setVisibility(View.VISIBLE);
