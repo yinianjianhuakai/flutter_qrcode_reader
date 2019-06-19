@@ -21,12 +21,12 @@
             android:layout_weight="1.4"
             android:background="#4dFFFFFF"
             android:orientation="horizontal">
-
+            <!-- 返回按钮 -->
             <ImageView
                 android:id="@+id/iv_finsh"
                 android:layout_width="50dp"
                 android:layout_height="49dp"
-                android:padding="6dp"
+                android:padding="12dp"
                 android:src="@drawable/whitetupian"/>
 
             <TextView
