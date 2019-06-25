@@ -30,7 +30,7 @@ enum QRCodeScene {
 
   /// 加油
   fueling,
-  
+
   /// 车牌付
   fuelingWithPlateNumberPay,
 }
