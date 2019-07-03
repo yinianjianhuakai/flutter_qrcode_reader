@@ -144,7 +144,7 @@ float portraitheight;
     
     // 我的二维码按钮
     _buttonMyQrCode = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _buttonMyQrCode.frame = CGRectMake(270,33,90,22);
+    _buttonMyQrCode.frame = CGRectMake(270,53,90,22);
     [_buttonMyQrCode setTitle:@"我的二维码" forState:UIControlStateNormal];
     [_buttonMyQrCode setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_buttonMyQrCode addTarget:self action:@selector(onMyQrCode) forControlEvents:UIControlEventTouchUpInside];
@@ -164,7 +164,7 @@ float portraitheight;
     
     // 扫一扫
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(161,33,54,22);
+    label.frame = CGRectMake(161,53,54,22);
     label.numberOfLines = 0;
     [_qrcodeViewController.view addSubview:label];
     
@@ -176,7 +176,7 @@ float portraitheight;
     
     // 返回
     _buttonBack = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _buttonBack.frame = CGRectMake(15,33,54,22);
+    _buttonBack.frame = CGRectMake(15,53,54,22);
     [_buttonBack setTitle:@"返回" forState:UIControlStateNormal];
     [_buttonBack setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_buttonBack addTarget:self action:@selector(stopReading) forControlEvents:UIControlEventTouchUpInside];
