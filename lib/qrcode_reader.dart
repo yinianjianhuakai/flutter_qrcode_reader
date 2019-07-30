@@ -33,6 +33,11 @@ enum QRCodeScene {
 
   /// 车牌付
   fuelingWithPlateNumberPay,
+
+  nothing,
+
+  /// 加油员端，用手机号码支付
+  phone,
 }
 
 class QRCodeReader {

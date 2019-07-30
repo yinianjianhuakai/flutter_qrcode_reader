@@ -43,7 +43,7 @@ public class QRScanActivity extends Activity implements QRCodeReaderView.OnQRCod
     public static String EXTRA_TORCH_ENABLED = "extra_torch_enabled";
     public static String EXTRA_FRONT_CAMERA = "extra_front_camera";
     private ImageView scan_line, iv_finsh;
-    private TextView my_qrcode, tv_chepaifu, tv_yuangongid;
+    private TextView my_qrcode, tv_chepaifu, tv_yuangongid, shoujiHaoMa;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +53,7 @@ public class QRScanActivity extends Activity implements QRCodeReaderView.OnQRCod
         my_qrcode = (TextView) findViewById(R.id.my_qrcode);
         tv_chepaifu = (TextView) findViewById(R.id.tv_chepaifu);
         tv_yuangongid = (TextView) findViewById(R.id.tv_yuangongid);
+        shoujiHaoMa = (TextView) findViewById(R.id.shouJiHaoMa);
         iv_finsh = (ImageView) findViewById(R.id.iv_finsh);
         iv_finsh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,14 +65,29 @@ public class QRScanActivity extends Activity implements QRCodeReaderView.OnQRCod
             tv_chepaifu.setVisibility(View.GONE);//车牌付，VISIBLE显示，隐藏GONE
             tv_yuangongid.setVisibility(View.VISIBLE);//输入员工ID，VISIBLE显示，隐藏GONE
             my_qrcode.setVisibility(View.VISIBLE);
+            shoujiHaoMa.setVisibility(View.GONE);
+
         } else if (QRCodeReaderPlugin.instance.qrCodeScene == QRCodeScene.fuelingWithPlateNumberPay) {
             tv_chepaifu.setVisibility(View.VISIBLE);//车牌付，VISIBLE显示，隐藏GONE
             tv_yuangongid.setVisibility(View.VISIBLE);//输入员工ID，VISIBLE显示，隐藏GONE
             my_qrcode.setVisibility(View.VISIBLE);
-        } else {
+            shoujiHaoMa.setVisibility(View.GONE);
+        } else if (QRCodeReaderPlugin.instance.qrCodeScene == QRCodeScene.bindingGasStation) {
             tv_chepaifu.setVisibility(View.GONE);//车牌付，VISIBLE显示，隐藏GONE
             tv_yuangongid.setVisibility(View.GONE);//输入员工ID，VISIBLE显示，隐藏GONE
             my_qrcode.setVisibility(View.GONE);
+            shoujiHaoMa.setVisibility(View.GONE);
+        } else if (QRCodeReaderPlugin.instance.qrCodeScene == QRCodeScene.nothing) {
+            tv_chepaifu.setVisibility(View.GONE);//车牌付，VISIBLE显示，隐藏GONE
+            tv_yuangongid.setVisibility(View.GONE);//输入员工ID，VISIBLE显示，隐藏GONE
+            my_qrcode.setVisibility(View.GONE);
+            shoujiHaoMa.setVisibility(View.GONE);
+        } else if (QRCodeReaderPlugin.instance.qrCodeScene == QRCodeScene.phone) {
+            tv_chepaifu.setVisibility(View.GONE);//车牌付，VISIBLE显示，隐藏GONE
+            tv_yuangongid.setVisibility(View.GONE);//输入员工ID，VISIBLE显示，隐藏GONE
+            my_qrcode.setVisibility(View.GONE);
+            shoujiHaoMa.setVisibility(View.VISIBLE);
+
         }
 
 
@@ -109,6 +125,15 @@ public class QRScanActivity extends Activity implements QRCodeReaderView.OnQRCod
                 setResult(Activity.RESULT_CANCELED, new Intent());
                 finish();
                 QRCodeReaderPlugin.channel.invokeMethod("staffId", "");
+            }
+
+        });
+        shoujiHaoMa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(Activity.RESULT_CANCELED, new Intent());
+                finish();
+                QRCodeReaderPlugin.channel.invokeMethod("phone", "");
             }
 
         });

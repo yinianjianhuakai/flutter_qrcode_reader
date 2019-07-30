@@ -90,6 +90,10 @@ public class QRCodeReaderPlugin implements MethodCallHandler, ActivityResultList
                 this.qrCodeScene = QRCodeScene.fueling;
             } else if (qrCodeScene.equals("fuelingWithPlateNumberPay")) {
                 this.qrCodeScene = QRCodeScene.fuelingWithPlateNumberPay;
+            } else if (qrCodeScene.equals("nothing")) {
+                this.qrCodeScene = QRCodeScene.nothing;
+            } else if (qrCodeScene.equals("phone")) {
+                this.qrCodeScene = QRCodeScene.phone;
             }
 
             if (checkSelfPermission(activity,

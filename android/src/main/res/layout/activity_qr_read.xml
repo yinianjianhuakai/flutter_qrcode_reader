@@ -121,8 +121,8 @@
                     android:gravity="center"
                     android:text="车牌付"
                     android:textColor="#FFFFFF"
-                    android:visibility="gone"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_yuangongid"
@@ -133,9 +133,31 @@
                     android:background="@drawable/shape_round_backgroundlogin"
                     android:gravity="center"
                     android:text="输入员工ID"
-                    android:visibility="gone"
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/shouJiHaoMa"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/shape_round_backgroundlogin"
+                    android:gravity="center"
+                    android:text="手机号码积分"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
 
