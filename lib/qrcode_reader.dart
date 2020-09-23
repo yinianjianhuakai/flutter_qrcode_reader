@@ -107,9 +107,8 @@ class QRCodeReader {
       "frontCamera": _frontCamera,
       "qrCodeScene": qrCodeScene.toString().split('.')[1],
     };
-    if (Random().nextInt(10) < 5) {
-      return await _channel.invokeMethod('readQRCode', params);
-    }
-    return Future.value("sddf@2dfsd23sdA");
+    
+    return await _channel.invokeMethod('readQRCode', params);
+    
   }
 }
